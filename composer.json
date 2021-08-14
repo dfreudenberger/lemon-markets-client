@@ -1,6 +1,7 @@
 {
     "name": "dfreudenberger/lemon-markets-client",
-    "version": "0.1.0",
+    "description": "php client for the lemon.markets api",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "LemonMarketsClient\\": "src/"
