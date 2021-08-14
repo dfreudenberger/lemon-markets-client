@@ -1,0 +1,43 @@
+{
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "amount": "-161.8600",
+            "uuid": "22402b85-396f-40c9-b708-18b6f22f43cf",
+            "created_at": "1628874391.296963",
+            "type": "order_buy",
+            "order": {
+                "uuid": "f9d3c658-24f2-4284-babf-5c256c73160b",
+                "processed_quantity": 1,
+                "average_price": "161.8600",
+                "instrument": {
+                    "title": "ETSY INC.",
+                    "isin": "US29786A1060"
+                }
+            }
+        },
+        {
+            "amount": "-163.9000",
+            "uuid": "57a84901-1901-40b5-b5cb-9dca229df678",
+            "created_at": "1624897159.069994",
+            "type": "order_buy",
+            "order": {
+                "uuid": "f51ace39-cde6-43ec-bd9c-0dbde5cf8438",
+                "processed_quantity": 1,
+                "average_price": "163.9000",
+                "instrument": {
+                    "title": "ETSY INC.",
+                    "isin": "US29786A1060"
+                }
+            }
+        },
+        {
+            "amount": "50000.0000",
+            "uuid": "fb14b647-72f0-48f8-ad8b-b8637b8b3d81",
+            "created_at": "1624896863.117183",
+            "type": "pay_in",
+            "order": null
+        }
+    ]
+}

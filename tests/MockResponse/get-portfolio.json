@@ -1,0 +1,15 @@
+{
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "instrument": {
+                "title": "ETSY INC.",
+                "isin": "US29786A1060"
+            },
+            "quantity": 2,
+            "average_price": "162.8800",
+            "latest_total_value": "323.7200"
+        }
+    ]
+}

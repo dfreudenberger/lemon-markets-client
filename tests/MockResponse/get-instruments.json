@@ -1,0 +1,24 @@
+{
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "isin": "US29786A1060",
+            "wkn": "A14P98",
+            "name": "ETSY INC. DL-,001",
+            "title": "ETSY INC.",
+            "symbol": "3E2",
+            "type": "stock",
+            "venues": [
+                {
+                    "name": "Börse München - Gettex",
+                    "title": "Gettex",
+                    "mic": "XMUN",
+                    "is_open": false,
+                    "tradable": true,
+                    "currency": "EUR"
+                }
+            ]
+        }
+    ]
+}

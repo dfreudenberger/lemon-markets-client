@@ -1,0 +1,11 @@
+{
+    "isin": "US29786A1060",
+    "valid_until": 1628959194,
+    "side": "buy",
+    "quantity": 1,
+    "stop_price": null,
+    "limit_price": null,
+    "uuid": "34fc047a-78a1-4c41-adfa-a5396800f724",
+    "status": "inactive",
+    "trading_venue_mic": "xmun"
+}

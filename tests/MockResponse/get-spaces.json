@@ -1,0 +1,15 @@
+{
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "uuid": "cf1100b4-3f84-4199-95b8-c19277141598",
+            "name": "some-name",
+            "state": {
+                "balance": "5000.500",
+                "cash_to_invest": "4000.400"
+            },
+            "type": "strategy"
+        }
+    ]
+}
