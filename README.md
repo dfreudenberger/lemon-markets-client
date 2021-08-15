@@ -73,6 +73,6 @@ the test suite, just execute the following command in the root directory of the
 repository.
 
 ```shell
-./vendor/bin/phpunit
+composer test
 ```
 
