@@ -40,36 +40,41 @@ class LemonMarketsClient extends AbstractClient
         return $this->deserialize($body, Spaces::class);
     }
 
-    public function getSpace(UuidInterface $spaceUuid): Space
+    public function getSpace(): Space
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('get', sprintf('/rest/v1/spaces/%s', $spaceUuid));
 
         return $this->deserialize($body, Space::class);
     }
 
-    public function getSpaceState(UuidInterface $spaceUuid): SpaceState
+    public function getSpaceState(): SpaceState
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('get', sprintf('/rest/v1/spaces/%s/state', $spaceUuid));
 
         return $this->deserialize($body, SpaceState::class);
     }
 
-    public function getOrders(UuidInterface $spaceUuid, array $params = []): Orders
+    public function getOrders(array $params = []): Orders
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('get', sprintf('/rest/v1/spaces/%s/orders', $spaceUuid), ['query' => $params]);
 
         return $this->deserialize($body, Orders::class);
     }
 
-    public function getOrder(UuidInterface $spaceUuid, UuidInterface $orderUuid): Order
+    public function getOrder(UuidInterface $orderUuid): Order
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('get', sprintf('/rest/v1/spaces/%s/orders/%s', $spaceUuid, $orderUuid));
 
         return $this->deserialize($body, Order::class);
     }
 
-    public function placeOrder(UuidInterface $spaceUuid, PlaceOrderCommand $command): PlacedOrder
+    public function placeOrder(PlaceOrderCommand $command): PlacedOrder
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('post', sprintf('/rest/v1/spaces/%s/orders', $spaceUuid), [
             'form_params' => $command->toArray(),
         ]);
@@ -77,15 +82,18 @@ class LemonMarketsClient extends AbstractClient
         return $this->deserialize($body, PlacedOrder::class);
     }
 
-    public function activateOrder(UuidInterface $spaceUuid, UuidInterface $orderUuid): OrderActivation
+    public function activateOrder(UuidInterface $orderUuid): OrderActivation
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('put', sprintf('/rest/v1/spaces/%s/orders/%s/activate', $spaceUuid, $orderUuid));
 
         return $this->deserialize($body, OrderActivation::class);
     }
 
-    public function deleteOrder(UuidInterface $spaceUuid, UuidInterface $orderUuid): void
+    public function deleteOrder(UuidInterface $orderUuid): void
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
+
         try {
             $this->request('delete', sprintf('/rest/v1/spaces/%s/orders/%s', $spaceUuid, $orderUuid));
         } catch (ClientException $ex) {
@@ -95,15 +103,17 @@ class LemonMarketsClient extends AbstractClient
         }
     }
 
-    public function getPortfolio(UuidInterface $spaceUuid): Portfolio
+    public function getPortfolio(): Portfolio
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('get', sprintf('/rest/v1/spaces/%s/portfolio', $spaceUuid));
 
         return $this->deserialize($body, Portfolio::class);
     }
 
-    public function getTransactions(UuidInterface $spaceUuid, array $params = []): Transactions
+    public function getTransactions(array $params = []): Transactions
     {
+        $spaceUuid = $this->tokenCache->getToken()->spaceUuid;
         $body = $this->request('get', sprintf('/rest/v1/spaces/%s/transactions', $spaceUuid), ['query' => $params]);
 
         return $this->deserialize($body, Transactions::class);

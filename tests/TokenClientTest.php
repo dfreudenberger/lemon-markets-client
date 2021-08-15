@@ -34,7 +34,7 @@ class TokenClientTest extends TestCase
      */
     public function authenticate_sends_correct_request()
     {
-        $this->mock->append(new Response(200, [], '{}'));
+        $this->mock->append(new Response(200, [], $this->getAccessTokenAsJson()));
 
         $this->subject->authenticate();
 
@@ -51,23 +51,28 @@ class TokenClientTest extends TestCase
     /**
      * @test
      */
-    public function getSpaces_sends_correct_request()
+    public function authenticate_decodes_response()
     {
-        $body = <<<BODY
-            {
-             "access_token": "some-access-token",
-             "expires_in": 2591999,
-             "scope": "some-scope",
-             "token_type": "bearer"
-            }
-        BODY;
-
-        $this->mock->append(new Response(200, [], $body));
+        $this->mock->append(new Response(200, [], $this->getAccessTokenAsJson()));
 
         $token = $this->subject->authenticate();
+
         $this->assertEquals('some-access-token', $token->accessToken);
         $this->assertEquals(2591999, $token->expiresIn);
-        $this->assertEquals('some-scope', $token->scope);
+        $this->assertEquals('portfolio:read space:f28a807d-ea5f-4235-9b75-dff62e3dd529', $token->scope);
         $this->assertEquals('bearer', $token->tokenType);
+        $this->assertEquals('f28a807d-ea5f-4235-9b75-dff62e3dd529', $token->spaceUuid);
+    }
+
+    private function getAccessTokenAsJson(): string
+    {
+        return trim('
+            {
+                "access_token": "some-access-token",
+                "expires_in": 2591999,
+                "scope": "portfolio:read space:f28a807d-ea5f-4235-9b75-dff62e3dd529",
+                "token_type": "bearer"
+            }
+        ');
     }
 }
