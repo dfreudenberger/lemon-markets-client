@@ -18,7 +18,9 @@ use Ramsey\Uuid\Uuid;
 
 class LemonMarketsClientTest extends TestCase
 {
-    private static string $accessToken = '0a1349be-2d87-4540-a2b6-e3e4c21b5adb';
+    private static string $accessToken = 'some-access-token';
+
+    private static string $spaceUuid = '13c64177-9990-4721-a5be-6086c497a5ad';
 
     private LemonMarketsClient $subject;
 
@@ -60,13 +62,12 @@ class LemonMarketsClientTest extends TestCase
      */
     public function getSpace_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $response = $this->mockResponse('get-space.json');
 
-        $spaces = $this->subject->getSpace($spaceUuid);
+        $spaces = $this->subject->getSpace();
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid, $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid, $request->getUri());
         $this->assertEquals('GET', $request->getMethod());
         $this->compareJson($spaces, $response);
     }
@@ -76,13 +77,12 @@ class LemonMarketsClientTest extends TestCase
      */
     public function getSpaceState_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $response = $this->mockResponse('get-space-state.json');
 
-        $spaceState = $this->subject->getSpaceState($spaceUuid);
+        $spaceState = $this->subject->getSpaceState();
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/state', $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/state', $request->getUri());
         $this->assertEquals('GET', $request->getMethod());
         $this->compareJson($spaceState, $response);
     }
@@ -92,13 +92,12 @@ class LemonMarketsClientTest extends TestCase
      */
     public function getOrders_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $response = $this->mockResponse('get-orders.json');
 
-        $orders = $this->subject->getOrders($spaceUuid, ['side' => 'buy']);
+        $orders = $this->subject->getOrders(['side' => 'buy']);
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/orders?side=buy', $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/orders?side=buy', $request->getUri());
         $this->assertEquals('GET', $request->getMethod());
         $this->compareJson($orders, $response);
     }
@@ -108,14 +107,13 @@ class LemonMarketsClientTest extends TestCase
      */
     public function getOrder_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $orderUuid = Uuid::uuid4();
         $response = $this->mockResponse('get-order.json');
 
-        $order = $this->subject->getOrder($spaceUuid, $orderUuid);
+        $order = $this->subject->getOrder($orderUuid);
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/orders/' . $orderUuid, $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/orders/' . $orderUuid, $request->getUri());
         $this->assertEquals('GET', $request->getMethod());
         $this->compareJson($order, $response);
     }
@@ -125,7 +123,6 @@ class LemonMarketsClientTest extends TestCase
      */
     public function placeOrder_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $response = $this->mockResponse('place-order.json');
         $command = new PlaceOrderCommand(
             isin: 'US29786A1060',
@@ -134,10 +131,10 @@ class LemonMarketsClientTest extends TestCase
             quantity: 1
         );
 
-        $order = $this->subject->placeOrder($spaceUuid, $command);
+        $order = $this->subject->placeOrder($command);
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/orders', $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/orders', $request->getUri());
         $this->assertEquals('POST', $request->getMethod());
         $this->compareJson($order, $response);
     }
@@ -147,14 +144,13 @@ class LemonMarketsClientTest extends TestCase
      */
     public function activateOrder_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $orderUuid = Uuid::uuid4();
         $response = $this->mockResponse('activate-order.json');
 
-        $activation = $this->subject->activateOrder($spaceUuid, $orderUuid);
+        $activation = $this->subject->activateOrder($orderUuid);
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/orders/' . $orderUuid . '/activate', $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/orders/' . $orderUuid . '/activate', $request->getUri());
         $this->assertEquals('PUT', $request->getMethod());
         $this->compareJson($activation, $response);
     }
@@ -164,14 +160,13 @@ class LemonMarketsClientTest extends TestCase
      */
     public function deleteOrder_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $orderUuid = Uuid::uuid4();
         $this->mock->append(new Response(204));
 
-        $this->subject->deleteOrder($spaceUuid, $orderUuid);
+        $this->subject->deleteOrder($orderUuid);
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/orders/' . $orderUuid, $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/orders/' . $orderUuid, $request->getUri());
         $this->assertEquals('DELETE', $request->getMethod());
     }
 
@@ -180,13 +175,12 @@ class LemonMarketsClientTest extends TestCase
      */
     public function getPortfolio_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $response = $this->mockResponse('get-portfolio.json');
 
-        $portfolio = $this->subject->getPortfolio($spaceUuid);
+        $portfolio = $this->subject->getPortfolio();
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/portfolio', $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/portfolio', $request->getUri());
         $this->assertEquals('GET', $request->getMethod());
         $this->compareJson($portfolio, $response);
     }
@@ -196,13 +190,12 @@ class LemonMarketsClientTest extends TestCase
      */
     public function getTransactions_sends_correct_request_and_decodes_response()
     {
-        $spaceUuid = Uuid::uuid4();
         $response = $this->mockResponse('get-transactions.json');
 
-        $transactions = $this->subject->getTransactions($spaceUuid, ['limit' => 50]);
+        $transactions = $this->subject->getTransactions(['limit' => 50]);
 
         $request = $this->getSentRequest();
-        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . $spaceUuid . '/transactions?limit=50', $request->getUri());
+        $this->assertEquals('https://api.example.org/rest/v1/spaces/' . self::$spaceUuid . '/transactions?limit=50', $request->getUri());
         $this->assertEquals('GET', $request->getMethod());
         $this->compareJson($transactions, $response);
     }
@@ -275,7 +268,9 @@ class LemonMarketsClientTest extends TestCase
     private function mockTokenCache(): TokenCache
     {
         $token = new AccessToken();
-        $token->accessToken = 'some-access-token';
+        $token->accessToken = self::$accessToken;
+        $token->scope = sprintf('portfolio:read space:%s', self::$spaceUuid);
+        $token->initSpaceUuid();
 
         $tokenCache = $this->createMock(TokenCache::class);
         $tokenCache->expects($this->any())

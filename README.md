@@ -54,7 +54,7 @@ $tokenClient = new TokenClient('YOUR-CLIENT-ID', 'YOUR-CLIENT-SECRET');
 $tokenCache = new TokenCache($tokenClient);
 $client = new LemonMarketsClient($tokenCache);
 
-$placedOrder = $client->placeOrder($spaceUuid, new PlaceOrderCommand(
+$placedOrder = $client->placeOrder(new PlaceOrderCommand(
     isin: 'US29786A1060',
     validUntil: strval(time() + 3600),
     side: PlaceOrderCommand::SIDE_BUY,
@@ -62,7 +62,7 @@ $placedOrder = $client->placeOrder($spaceUuid, new PlaceOrderCommand(
 ));
 print_r($placedOrder);
 
-$activation = $client->activateOrder($spaceUuid, $placedOrder->uuid);
+$activation = $client->activateOrder($placedOrder->uuid);
 print_r($activation);
 ```
 
