@@ -66,7 +66,15 @@ $activation = $client->activateOrder($placedOrder->uuid);
 print_r($activation);
 ```
 
-### Running tests
+## 🤝 Contributing
+
+1. Fork it [dfreudenberger/lemon-markets-client](https://github.com/dfreudenberger/lemon-markets-client)
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create a new Pull Request
+
+### Running tests locally
 
 Unit tests should exist for all critical parts of the code base. In order to run
 the test suite, just execute the following command in the root directory of the 
@@ -76,3 +84,6 @@ repository.
 composer test
 ```
 
+## 📝 License
+
+This project is licensed under the MIT License.
